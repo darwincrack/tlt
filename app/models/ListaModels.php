@@ -21,6 +21,14 @@ class ListaModels
 
     }
 
+        static  public function estados()
+    {
+        return  DB::table('estados')
+            ->where('activo', 1)
+            ->get();
+
+    }
+
 
     static  public function cargos()
     {

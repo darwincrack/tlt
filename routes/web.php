@@ -49,6 +49,18 @@ Route::get('ubicacion/editar/{id}', 'UbicacionController@editar')->where('id','[
 Route::post('ubicacion/editar/', 'UbicacionController@store_editar');
 
 
+
+Route::get('articulos', 'ArticulosController@index');
+Route::get('articulos/data', 'ArticulosController@anyData');
+Route::get('articulos/add', 'ArticulosController@add');
+Route::post('articulos/add', 'ArticulosController@store');
+Route::get('articulos/editar/{id}', 'ArticulosController@editar')->where('id','[0-9]+');
+Route::post('articulos/editar/', 'ArticulosController@store_editar');
+
+
+
+
+
 Route::get('cargo', 'CargoController@index');
 Route::get('cargo/data', 'CargoController@anyData');
 Route::get('cargo/add', 'CargoController@add');

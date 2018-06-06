@@ -65,6 +65,24 @@
                 </ul>
             </li>
     @endrole  
+
+    @role(['admin','inventario']) 
+           <li class=" @if (Route::getCurrentRoute()->getPath() == 'articulos')
+                    active
+                 @elseif (Route::getCurrentRoute()->getPath() == 'articulos/add')
+                    active
+                @endif ">
+                <a href="index.html"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="nav-label">Articulos</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li></li>
+                    <li class="{{ (Route::getCurrentRoute()->getPath() == 'articulos') ? 'active' : '' }}"><a href="{{ url('articulos') }}"><a href="{{ url('/articulos') }}">Lista</a></li>
+                  
+                    <li class="{{ (Route::getCurrentRoute()->getPath() == 'articulos/add') ? 'active' : '' }}"><a href="{{ url('articulos/add') }}"><a href="{{ url('/articulos/add') }}">Agregar</a></li>
+                
+                </ul>
+            </li>
+    @endrole 
+
         @role(['admin','inventario']) 
           <li class=" @if (Route::getCurrentRoute()->getPath() == 'cargo')
                     active
