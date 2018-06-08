@@ -177,6 +177,7 @@
 @endrole
 
 
+<!--
 
 @role(['admin','seguridad'])
             <li class=" @if (Route::getCurrentRoute()->getPath() == 'reportes')
@@ -196,22 +197,9 @@
 
 
 
-            <li class=" @if (Route::getCurrentRoute()->getPath() == 'reportes')
-                    active
-                    @elseif (Route::getCurrentRoute()->getPath() == 'reportes/justificativos')
-                    active
-                @endif ">
-                <a href="index.html"><i class="fa fa-university" aria-hidden="true"></i> <span class="nav-label">Reportes no</span> <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    <li></li>
-                    <li class="{{ (Route::getCurrentRoute()->getPath() == 'reportes') ? 'active' : '' }}"><a href="{{ url('reportes') }}"><a href="{{ url('/reportes') }}">General</a></li>
-                    <li class="{{ (Route::getCurrentRoute()->getPath() == 'reportes/justificativos') ? 'active' : '' }}"><a href="{{ url('reportes/justificativos') }}"><a href="{{ url('/reportes/justificativos') }}">Justificativos</a></li>
-
-                </ul>
-            </li>
 
 
-
+-->
 
             <li class=" @if (Route::getCurrentRoute()->getPath() == 'tiposjustificacion')
                     active
@@ -226,7 +214,7 @@
                     <li class="{{ (Route::getCurrentRoute()->getPath() == 'tiposjustificacion/add') ? 'active' : '' }}"><a href="{{ url('tiposjustificacion/add') }}"><a href="{{ url('/tiposjustificacion/add') }}">Agregar</a></li>
             @endrole       
                 </ul>
-            </li>
+            </li> 
 
 
 

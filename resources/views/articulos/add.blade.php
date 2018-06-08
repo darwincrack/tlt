@@ -44,9 +44,32 @@
 
 
 
+                    <div class="form-group"><label class="col-sm-2 control-label">Ubicación</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control" class="form-control m-b" name="ubicacion" id="ubicacion">
+                        
+
+                            @foreach($data_ubicaciones as $data_ubicacion)
+                                    <option value="{{$data_ubicacion->id}}">{{$data_ubicacion->nombre}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
 
+    <div class="form-group"><label class="col-sm-2 control-label">Estado del Artículo</label>
 
+                        <div class="col-sm-10">
+                            <select class="form-control" class="form-control m-b" name="estados" id="estados">
+                        
+
+                            @foreach($data_estados as $data_estado)
+                                    <option value="{{$data_estado->id}}">{{$data_estado->nombre}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
 
 
@@ -127,6 +150,9 @@
                             @endif
                         </div>
                     </div>
+
+
+    @role(['admin']) 
 
 
                     <div class="form-group{{ $errors->has('costo_bs') ? ' has-error' : '' }}"><label class="col-lg-2 control-label">Costo Bs</label>
@@ -258,19 +284,7 @@
 
 
 
-
-    <div class="form-group"><label class="col-sm-2 control-label">Estado del Artículo</label>
-
-                        <div class="col-sm-10">
-                            <select class="form-control" class="form-control m-b" name="estados" id="estados">
-                        
-
-                            @foreach($data_estados as $data_estado)
-                                    <option value="{{$data_estado->id}}">{{$data_estado->nombre}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+ @endrole
 
 
 
@@ -294,18 +308,7 @@
 
 
 
-                    <div class="form-group"><label class="col-sm-2 control-label">Ubicación</label>
 
-                        <div class="col-sm-10">
-                            <select class="form-control" class="form-control m-b" name="ubicacion" id="ubicacion">
-                        
-
-                            @foreach($data_ubicaciones as $data_ubicacion)
-                                    <option value="{{$data_ubicacion->id}}">{{$data_ubicacion->nombre}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
 
 
 

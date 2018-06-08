@@ -77,6 +77,15 @@ class ArticulosModels
 
     }
 
+
+    static public function delete($id_articulo)
+    {
+        DB::table('articulos')
+                ->where('id', $id_articulo)
+                ->delete();
+    }
+
+
     static public function last_userID()
     {
 

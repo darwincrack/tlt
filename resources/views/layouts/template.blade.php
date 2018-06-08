@@ -35,11 +35,11 @@
             <div class="col-sm-4 animated animated slideInDown">
                 <div class="title-action">
 
-                @role(['admin','operador'])
+               
 
                     @stack('boton_accion')
                     
-                @endrole    
+                  
 
                 </div>
             </div>
