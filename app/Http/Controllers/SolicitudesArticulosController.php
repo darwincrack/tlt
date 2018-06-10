@@ -40,37 +40,99 @@ class SolicitudesArticulosController extends Controller
     public function anyData()
     {
 
-        $cargos =  SolicitudesArticulosModels::listar();
+        $solicitudesarticulos =  SolicitudesArticulosModels::listar();
 
-        return Datatables::of($cargos)
-            ->addColumn('action', function ($cargo) {
-            
-                if(Entrust::hasRole(['admin', 'operador']))
-                {
+         $xx=Datatables::of($solicitudesarticulos)
 
-                    return '<a href="cargo/editar/'.$cargo->id.'" class="btn btn-xs btn-primary editar"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+
+            ->editColumn('nombre_tipo_accion', function ($solicitudesarticulos) {
+                if($solicitudesarticulos->nombre_tipo_accion!=''){
+
+                    if(strtolower($solicitudesarticulos->nombre_tipo_accion)=="editar"){
+                        return "<label class='label label-primary green'> ".$solicitudesarticulos->nombre_tipo_accion."</label>";
+                    }
+                    elseif(strtolower($solicitudesarticulos->nombre_tipo_accion)=="eliminar"){
+                        return "<label class='label label-danger'>".$solicitudesarticulos->nombre_tipo_accion."</label>";
+
+                    }
+
+
+                    
                 }
-                else
-                {
-                    return '-';
-                }
+                return "";
+
 
             })
 
 
-            ->editColumn('activo', function ($cargo) {
-                if($cargo->activo=='1'){
-                    return 'SI';
+            ->editColumn('status', function ($solicitudesarticulos) {
+                if($solicitudesarticulos->status!=''){
+
+                    if(strtolower($solicitudesarticulos->status)=="procesado"){
+                        return "<label class='label label-primary green'><i class='fa fa-check-circle'></i> ".$solicitudesarticulos->status."</label>";
+                    }
+                    else {
+                        return $solicitudesarticulos->status;
+                    }
+
+
+
+                    
+                }
+                return "";
+
+
+            })
+
+
+
+
+            ->editColumn('ver_articulo', function ($solicitudesarticulos) {
+
+
+
+                if(Entrust::hasRole(['admin','informatica']))
+                {
+                      return '<a href="articulos/editar/'.$solicitudesarticulos->idArticulo.'/'.$solicitudesarticulos->idSolicitud.'" class="btn btn-xs btn-primary editar"><i class="glyphicon glyphicon-edit"></i> Edit</a> 
+
+                      <a data-eliminar="'.$solicitudesarticulos->idArticulo.'" data-eliminarsolicitud="'.$solicitudesarticulos->idSolicitud.'" class="btn btn-xs btn-danger delete" title="Recuerde que al eliminar, borra permanentemente este articulo"><i class="glyphicon glyphicon-trash"></i> Eliminar</a>';
+
+    
                 }
                 else{
-                    return 'NO';
+               return '<a href="articulos/editar/'.$solicitudesarticulos->idArticulo.'" class="btn btn-xs btn-primary editar"><i class="glyphicon glyphicon-eye"></i> Ver</a>';
+                   
                 }
 
-            })
+              
+
+
+            });
+
+
+                if(Entrust::hasRole(['admin']))
+                {
+                    $xx->addColumn('autorizar_informatica', function ($solicitudesarticulos)  {
+
+                           $xxx=($solicitudesarticulos->autorizado>=1)?'checked=':'null';
+                              return "  <div class='switch'>
+                                <div class='onoffswitch'>
+                                    <input type='checkbox' data-autorizarinformatica='".$solicitudesarticulos->idSolicitud."'    class='onoffswitch-checkbox' id='calidad_prestamo_".$solicitudesarticulos->idSolicitud."' name='calidad_prestamo' value='1' ".$xxx." >
+                                    <label class='onoffswitch-label' for='calidad_prestamo_".$solicitudesarticulos->idSolicitud."'>
+                                        <span class='onoffswitch-inner'></span>
+                                        <span class='onoffswitch-switch'></span>
+                                    </label>
+                                </div>
+                            </div>";
+
+
+                    });
+
+                }
 
 
 
-            ->make(true);
+            return $xx->make(true);
 
     }
 
@@ -136,6 +198,18 @@ class SolicitudesArticulosController extends Controller
             return redirect('cargo');
     }
 
+
+
+function autorizarInformatica($id,$valor)
+{
+
+       
+
+           $post= SolicitudesArticulosModels::autorizarInformatica($id,$valor);
+            LogsistemaModels::insertar('SOLICITUDES ARTICULOS','AUTORIZAR INFORMATíCA, ID SOLICITUD DE ARTICULO:'. $id);
+            return response()->json($post);
+       
+}
 
 
 

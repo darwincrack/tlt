@@ -20,6 +20,7 @@ class ArticulosModels
         if(!$id){
 
             $data = DB::table('articulos')
+            ->where('articulos.id_estado','!=', 4)
 
             ->join('ubicacion', 'articulos.id_ubicacion', '=', 'ubicacion.id')
              ->join('estados', 'articulos.id_estado', '=', 'estados.id')
@@ -32,6 +33,8 @@ class ArticulosModels
         {
             $data = DB::table('articulos')
             ->where('articulos.id', $id)
+            ->where('articulos.id_estado','!=', 4)
+
             ->join('ubicacion', 'articulos.id_ubicacion', '=', 'ubicacion.id')
 
              ->join('estados', 'articulos.id_estado', '=', 'estados.id')
@@ -55,12 +58,20 @@ class ArticulosModels
     }
 
 
-    static public function editar($id_articulo,$nombre,$modelo,$serial,$marca,$codigo_barra,$descripcion,$observacion, $costo_bs,$costo_dolar, $fecha_adquisicion,$calidad_prestamo,$donado,$nro_factura,$costo_actual_bs,$costo_actual_dolar,$ubicacion,$estado )
+    static public function editar($id_articulo,$nombre,$modelo,$serial,$marca,$codigo_barra,$descripcion,$observacion, $costo_bs,$costo_dolar, $fecha_adquisicion,$calidad_prestamo,$donado,$nro_factura,$costo_actual_bs,$costo_actual_dolar,$ubicacion,$estado,$sa )
     {
         DB::table('articulos')
             ->where('id', $id_articulo)
-            ->update( [ 'nombre' => $nombre, 'modelo' => $modelo, 'serial' => $serial, 'marca' => $marca, 'codigo_barra' => $codigo_barra, 'descripcion' => $descripcion, 'observacion' => $observacion, 'costo_bs' => $costo_bs, 'costo_dolar' => $costo_dolar, 'fecha_adquisicion' => $fecha_adquisicion, 'calidad_prestamo' => $calidad_prestamo, 'donado' => $donado, 'nro_factura' => $nro_factura,'costo_actual_bs' => $costo_actual_bs,'costo_actual_dolar' => $costo_actual_dolar,'id_ubicacion' => $ubicacion, 'id_estado' => $estado, 'updated_at' => DB::raw("now()"), 'creado_por'=>Auth::user()->id]);
+            ->update( [ 'nombre' => $nombre, 'modelo' => $modelo, 'serial' => $serial, 'marca' => $marca, 'codigo_barra' => $codigo_barra, 'descripcion' => $descripcion, 'observacion' => $observacion, 'costo_bs' => $costo_bs, 'costo_dolar' => $costo_dolar, 'fecha_adquisicion' => $fecha_adquisicion, 'calidad_prestamo' => $calidad_prestamo, 'donado' => $donado, 'nro_factura' => $nro_factura,'costo_actual_bs' => $costo_actual_bs,'costo_actual_dolar' => $costo_actual_dolar,'id_ubicacion' => $ubicacion, 'id_estado' => $estado, 'updated_at' => DB::raw("now()"), 'actualizado_por'=>Auth::user()->id]);
+
+            if($sa!='')
+            {
+            DB::table('solicitudes_articulos')
+            ->where('id', $sa)
+            ->update( [ 'status'=>'procesado', 'updated_at' => DB::raw("now()"), 'procesado_por'=>Auth::user()->id]);
+            }
     }
+
 
 
 
@@ -78,11 +89,21 @@ class ArticulosModels
     }
 
 
-    static public function delete($id_articulo)
+    static public function delete($id_articulo,$sa)
     {
-        DB::table('articulos')
+       /* DB::table('articulos')
                 ->where('id', $id_articulo)
-                ->delete();
+                ->delete();*/
+
+                  DB::table('articulos')
+            ->where('id', $id_articulo)
+            ->update( [ 'id_estado' => 4, 'updated_at' => DB::raw("now()"), 'creado_por'=>Auth::user()->id]);
+             if($sa!='')
+            {
+            DB::table('solicitudes_articulos')
+            ->where('id', $sa)
+            ->update( [ 'status'=>'procesado', 'updated_at' => DB::raw("now()"), 'procesado_por'=>Auth::user()->id]);
+            }
     }
 
 

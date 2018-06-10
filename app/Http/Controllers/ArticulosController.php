@@ -101,8 +101,9 @@ class ArticulosController extends Controller
 
 
 
-    public function editar($id_articulo)
+    public function editar($id_articulo,$solicitudarticulo=FALSE)
     {
+
 
         $data_articulo         =  ArticulosModels::listar($id_articulo);
 
@@ -114,8 +115,18 @@ class ArticulosController extends Controller
         $data_estados                =  ListaModels::estados();
 
 
+         if(Entrust::hasRole(['admin']))
+         { 
+                return view('articulos.editar', ['id_articulo' =>$id_articulo,'data_ubicaciones' => $data_ubicaciones, 'data_articulo' => $data_articulo,'data_estados' => $data_estados,'solicitudarticulo'=>$solicitudarticulo]);
+         }
+         else
+         {
+            return view('articulos.solover', ['id_articulo' =>$id_articulo,'data_ubicaciones' => $data_ubicaciones, 'data_articulo' => $data_articulo,'data_estados' => $data_estados]);
+         }
+
+
         
-        return view('articulos.editar', ['id_articulo' =>$id_articulo,'data_ubicaciones' => $data_ubicaciones, 'data_articulo' => $data_articulo,'data_estados' => $data_estados]);
+  
 
 
     }
@@ -236,6 +247,8 @@ class ArticulosController extends Controller
         $costo_actual_dolar =   $request->input("costo_actual_dolar");
         $ubicacion          =   $request->input("ubicacion");
         $estado             =   $request->input("estado");
+        $sa                 =   $request->input("sa");
+
 
 
 
@@ -256,10 +269,17 @@ class ArticulosController extends Controller
         }
 
 
-        ArticulosModels::editar($id_articulo,$nombre,$modelo,$serial,$marca,$codigo_barra,$descripcion,$observacion, $costo_bs,$costo_dolar, $fecha_adquisicion,$calidad_prestamo,$donado,$nro_factura,$costo_actual_bs,$costo_actual_dolar,$ubicacion,$estado );
+        ArticulosModels::editar($id_articulo,$nombre,$modelo,$serial,$marca,$codigo_barra,$descripcion,$observacion, $costo_bs,$costo_dolar, $fecha_adquisicion,$calidad_prestamo,$donado,$nro_factura,$costo_actual_bs,$costo_actual_dolar,$ubicacion,$estado,$sa );
+
+
         LogsistemaModels::insertar('ARTICULOS','EDIT');
         $request->session()->flash('alert-success', 'Articulo ['.$nombre.'] editado con exito!!');
 
+        if($sa!='')
+        {
+            LogsistemaModels::insertar('SOLICITUD ARTICULO','EDIT:'. $sa);
+            return redirect('solicitudesarticulos');
+        }
         return redirect('articulos');
     }
 
@@ -276,9 +296,15 @@ class ArticulosController extends Controller
 
 
 
-    public function eliminar($id_articulo,Request $request)
+    public function eliminar($id_articulo,$solicitudarticulo=FALSE, Request $request)
     {
-        ArticulosModels::delete($id_articulo);
+        ArticulosModels::delete($id_articulo,$solicitudarticulo);
+
+        if($solicitudarticulo!='')
+        {
+            LogsistemaModels::insertar('SOLICITUD ARTICULO','DELETE:'. $solicitudarticulo);
+        }
+
         LogsistemaModels::insertar('ARTICULOS','DELETE',$id_articulo);
         $request->session()->flash('alert-success', 'Articulo eliminado con exito!!');
         return redirect('articulos');

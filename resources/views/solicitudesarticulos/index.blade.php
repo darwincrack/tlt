@@ -5,7 +5,7 @@
     @push('boton_accion')
     <a href="{{ url('/articulos/add') }}" class="btn btn-primary">
         <span class="glyphicon glyphicon-plus"></span>
-        Nuevo Artículo
+        Nuevo Articulos
     </a>
     @endpush
 
@@ -19,13 +19,24 @@
 }
 
 
+.onoffswitch-inner:before {
+    content: "SI";
+
+}
+
+
+.onoffswitch-inner:after {
+    content: "NO";
+
+}
+
 </style>
 <link rel="stylesheet" href="{{ URL::asset('assets/css/plugins/toastr/toastr.min.css') }}">
 
 <link rel="stylesheet" href="{{ URL::asset('assets/css/plugins/dataTables/dataTables.min.css') }}">
 @endpush
 
-@section('title', 'Articulos')
+@section('title', 'Solicitudes Artículos')
 
 @section('content')
 
@@ -48,13 +59,15 @@
         <tr>
             <th>ID</th>
             <th>Nombre</th>
-            <th>Modelo</th>
-            <th>Serial</th>
-            <th>Marca</th>
             <th>Cod de barras</th>
-            <th>Ubicación</th>
+            <th>Motivo</th>
+            <th>Fecha de Solicitud</th>
+            <th>Tipo de Solicitud</th>
             <th>Estado</th>
             <th>Acción</th>
+            @role(['admin']) 
+              <th>Autorizar Informatica</th>
+            @endrole
 
         </tr>
         </thead>
@@ -120,19 +133,24 @@
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json"
             },
-            ajax: 'articulos/data',
+            ajax: 'solicitudesarticulos/data',
             "order": [[ 0, "desc" ]],
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
             columns: [
-                {data: 'idArticulo', name: 'idArticulo'},
-                {data: 'nombre_articulo', name: 'nombre_articulo'},      
-                {data: 'modelo', name: 'modelo'},
-                {data: 'serial', name: 'serial'},
-                {data: 'marca', name: 'marca'},
+                {data: 'idSolicitud', name: 'idSolicitud'},
+                {data: 'nombre_articulo', name: 'nombre_articulo'},    
                 {data: 'codigo_barra', name: 'codigo_barra'},
-                 {data: 'nombre_ubicacion', name: 'nombre_ubicacion'},
-                 {data: 'nombre_estado', name: 'nombre_estado'},
-                {data: 'action', name: 'action', orderable: false, searchable: false}
+                {data: 'motivo', name: 'motivo', "width": "27%"},
+                {data: 'fecha_solicitud', name: 'fecha_solicitud'},
+
+
+                {data: 'nombre_tipo_accion', name: 'nombre_tipo_accion', "width": "3%"},
+                {data: 'status', name: 'status'},
+                {data: 'ver_articulo', name: 'ver_articulo', orderable: false, searchable: false, "width": "14%"}
+                @role(['admin']) 
+                ,{data: 'autorizar_informatica', name: 'autorizar_informatica', orderable: false, searchable: false, "width": "3%"}
+                @endrole
+
 
             ],
             pageLength: 25,
@@ -171,6 +189,8 @@
 
 $( window ).load(function() {
  $('div.dataTables_filter input').focus();
+
+
 });
 
 
@@ -202,7 +222,8 @@ swal({
 
    var row = $(this).closest("tr").get(0);
             var id=$(row).find( ".delete" ).data("eliminar");
-            $.get("articulos/delete/"+id, function(data, status){
+            var sa=$(row).find( ".delete" ).data("eliminarsolicitud");
+            $.get("articulos/delete/"+id+"/"+sa, function(data, status){
             swal("Eliminado con exito!!", {
             icon: "success",
             }).then((e) => {
@@ -239,6 +260,81 @@ swal({
         var row = $(this).closest("tr").get(0);
         var id=$(row).find( ".eliminaredit" ).data("eliminaredit");
         $("#idx").val(id);
+        console.log($("#idx").val());
+    });
+
+
+
+    $('#users-table tbody').on( 'click', '.onoffswitch-checkbox', function (event) {
+        var valor = 0;
+        var row = $(this).closest("tr").get(0);
+        var id=$(row).find( ".onoffswitch-checkbox" ).data("autorizarinformatica");
+        var valor =$(row).val();
+
+
+
+        if( $(row).find( ".onoffswitch-checkbox" ).prop('checked') ) {
+            valor = 1;
+        }
+        else{
+            valor = '0';
+
+        }
+
+
+
+    toasterOptions();
+
+
+$.ajax({
+    // la URL para la petición
+    url : 'solicitudesarticulos/autorizarinformatica/'+id+"/"+valor,
+ 
+    // la información a enviar
+    // (también es posible utilizar una cadena de datos)
+ 
+    // especifica si será una petición POST o GET
+    type: 'GET',
+ 
+ 
+    // código a ejecutar si la petición es satisfactoria;
+    // la respuesta es pasada como argumento a la función
+    success : function(data) {
+
+       if ((data.errors)) {
+          
+                toastr.error("Ocurrio un error", "Error");
+            
+
+       }
+        else{
+            toastr.success("Petición enviada satisfactoriamente", "Exito!!");
+
+
+        }
+
+
+    },
+ 
+    // código a ejecutar si la petición falla;
+    // son pasados como argumentos a la función
+    // el objeto de la petición en crudo y código de estatus de la petición
+    error : function(xhr, status) {
+        toastr.error("Disculpe, existió un problema", "Error");
+    },
+ 
+});
+
+
+
+
+
+
+
+
+
+
+
     });
 
 

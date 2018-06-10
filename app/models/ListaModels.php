@@ -9,12 +9,14 @@
 namespace App\models;
 
 use DB;
-
+use Entrust;
 class ListaModels
 {
 
     static  public function departamentos()
     {
+
+
         return  DB::table('departamentos')
             ->where('activo', 1)
             ->get();
@@ -23,9 +25,19 @@ class ListaModels
 
         static  public function estados()
     {
-        return  DB::table('estados')
-            ->where('activo', 1)
-            ->get();
+              if(Entrust::hasRole(['admin']))
+                {
+                    return  DB::table('estados')
+                        ->where('activo', 1)
+                        ->get();
+                }
+                else{
+                return  DB::table('estados')
+                        ->where('activo', 1)
+                        ->where('id','!=', 4)
+                        ->get();
+
+                }
 
     }
 

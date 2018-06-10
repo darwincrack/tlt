@@ -177,6 +177,22 @@
 @endrole
 
 
+
+    @role(['admin','inventario','informatica']) 
+           <li class=" @if (Route::getCurrentRoute()->getPath() == 'solicitudesarticulos')
+                    active
+
+                @endif ">
+                <a href="{{ url('solicitudesarticulos') }}"><i class="fa fa-desktop" aria-hidden="true"></i> <span class="nav-label">Solicitudes Artículos</a>
+
+            </li>
+    @endrole  
+
+
+
+
+
+
 <!--
 
 @role(['admin','seguridad'])

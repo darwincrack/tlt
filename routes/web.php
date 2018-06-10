@@ -54,10 +54,10 @@ Route::get('articulos', 'ArticulosController@index');
 Route::get('articulos/data', 'ArticulosController@anyData');
 Route::get('articulos/add', 'ArticulosController@add');
 Route::post('articulos/add', 'ArticulosController@store');
-Route::get('articulos/editar/{id}', 'ArticulosController@editar')->where('id','[0-9]+');
+Route::get('articulos/editar/{id}/{solicitudarticulo?}', 'ArticulosController@editar')->where(  ['id','[0-9]+', 'solicitudarticulo' => '[0-9a-z]+']);
 Route::post('articulos/editar/', 'ArticulosController@store_editar');
 
-Route::get('articulos/delete/{id}', 'ArticulosController@eliminar')->where('id','[0-9]+');
+Route::get('articulos/delete/{id}/{solicitudarticulo?}', 'ArticulosController@eliminar')->where(['id','[0-9]+', 'solicitudarticulo' => '[0-9a-z]+']);
 
 
 
@@ -143,3 +143,5 @@ Route::get('solicitudesarticulos/add', 'SolicitudesArticulosController@add');
 Route::post('solicitudesarticulos/add', 'SolicitudesArticulosController@store');
 Route::get('solicitudesarticulos/editar/{id}', 'SolicitudesArticulosController@editar')->where('id','[0-9]+');
 Route::post('solicitudesarticulos/editar/', 'SolicitudesArticulosController@store_editar');
+
+Route::get('solicitudesarticulos/autorizarinformatica/{id}/{valor?}', 'SolicitudesArticulosController@autorizarInformatica')->where([ 'id'=>'[0-9]+', 'valor' => '[0-9]+']);

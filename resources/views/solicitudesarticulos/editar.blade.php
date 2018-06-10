@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="{{ URL::asset('assets/css/plugins/datapicker/datepicker3.css') }}">
 @endpush
 
-@section('title', 'editar  Artículo ['. $data_articulo->nombre_articulo.' ]' )
+@section('title', 'editar  Artículo ['. $data_articulo->nombre.' ]' )
 
 @section('content')
 
@@ -40,7 +40,7 @@
 
 
                     <input name="id_articulo" type="hidden" value="{{$id_articulo}}">
-<input name="sa" type="hidden" value="{{$solicitudarticulo}}">
+
 
 
                     <div class="form-group"><label class="col-sm-2 control-label">Ubicación</label>
@@ -65,7 +65,7 @@
                     <div class="form-group"><label class="col-sm-2 control-label">Estado del Artículo</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" class="form-control m-b" name="estado" id="estado" >
+                            <select class="form-control" class="form-control m-b" name="ubicacion" id="ubicacion" >
 
                        
                                 @foreach($data_estados as $data_estado)
