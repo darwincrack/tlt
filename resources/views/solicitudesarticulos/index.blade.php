@@ -3,10 +3,10 @@
 
 
     @push('boton_accion')
-    <a href="{{ url('/articulos/add') }}" class="btn btn-primary">
+  <!--  <a href="{{ url('/articulos/add') }}" class="btn btn-primary">
         <span class="glyphicon glyphicon-plus"></span>
         Nuevo Articulos
-    </a>
+    </a> -->
     @endpush
 
 
@@ -163,11 +163,11 @@
                 {extend: 'csv', exportOptions: {
                     columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
                 }},
-                {extend: 'excel', title: 'Reporte de Articulos', exportOptions: {
+                {extend: 'excel', title: 'Reporte de Solicitudes de Artículos', exportOptions: {
                     columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
                 }},
-                {extend: 'pdf', title: 'Reporte de Articulos',  exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                {extend: 'pdf', title: 'Reporte de Solicitudes de Artículos',  exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
                 }},
 
                 {extend: 'print',
