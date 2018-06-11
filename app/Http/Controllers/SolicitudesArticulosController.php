@@ -13,6 +13,10 @@ use Entrust;
 use Validator;
 use Illuminate\Support\Facades\Input;
 use Response;
+use Mail;
+use App\User;
+use App\Funciones;
+
 
 class SolicitudesArticulosController extends Controller
 {
@@ -33,6 +37,10 @@ class SolicitudesArticulosController extends Controller
 
     public function index()
     {
+
+        /* $users = Funciones::userRoles("admin");
+return $users[1]["email"];*/
+
         return view('solicitudesarticulos.index');
     }
 
@@ -136,15 +144,41 @@ class SolicitudesArticulosController extends Controller
 
     }
 
-    public function add()
-    {
 
-        return view('cargo.add');
-    }
 
 
     public function store(Request $request)
     {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*$users = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'admin');
+ })->get();
+
+
+
+
+return print_r($users);
+*/
+
+
+
+
 
 
         $validator = Validator::make(Input::all(), $this->rules);
@@ -156,47 +190,45 @@ class SolicitudesArticulosController extends Controller
             $motivo             =   $request->input("motivo");
             $id_articulo        =   $request->input("id");
 
-           $post= SolicitudesArticulosModels::insertar($id_articulo,$motivo,$tipo_accion);
+           $id_solicitudArticulo= SolicitudesArticulosModels::insertar($id_articulo,$motivo,$tipo_accion);
             LogsistemaModels::insertar('SOLICITUDES ARTICULOS','INSERT');
-            return response()->json($post);
+
+
+
+
+        $emails=array();
+        $users = Funciones::userRoles("admin");
+
+        foreach ($users  as $key => $value) {
+            $emails[$key ]= $value["email"];
+        }
+
+
+        $data_solicitudesarticulos =  SolicitudesArticulosModels::listar($id_solicitudArticulo);
+
+        Funciones::enviarMail("Solicitud para editar o eliminar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
+
+
+
+
+
+
+
+
+
+
+
+            return response()->json($id_solicitudArticulo);
         }
 
     }
 
 
 
-    public function editar($id_cargo)
-    {
-
-
-       $data_cargo         =  SolicitudesArticulosModels::show_cargo($id_cargo);
-
-
-        if (count($data_cargo)==0){
-            return redirect('cargo');
-        }
-        return view('cargo.editar', ['id_cargo'=>$id_cargo, 'data_cargo' =>$data_cargo]);
-
-
-    }
 
 
 
-    public function store_editar(Request $request)
-    {
 
-            $nombre                 =   $request->input("nombre");
-            $descripcion            =   $request->input("descripcion");
-            $activo                 =   $request->input("activo");
-            $id_cargo               =   $request->input("id_cargo");
-
-
-            SolicitudesArticulosModels::editar($id_cargo,$nombre,$descripcion,$activo);
-            LogsistemaModels::insertar('cargo','EDIT');
-            $request->session()->flash('alert-success', 'cargo editado con exito!!');
-
-            return redirect('cargo');
-    }
 
 
 
@@ -207,6 +239,23 @@ function autorizarInformatica($id,$valor)
 
            $post= SolicitudesArticulosModels::autorizarInformatica($id,$valor);
             LogsistemaModels::insertar('SOLICITUDES ARTICULOS','AUTORIZAR INFORMATíCA, ID SOLICITUD DE ARTICULO:'. $id);
+
+                if($valor==1)
+                {
+                        $emails=array();
+                        $users = Funciones::userRoles("informatica");
+
+                        foreach ($users  as $key => $value) {
+                            $emails[$key ]= $value["email"];
+                        }
+
+
+                        $data_solicitudesarticulos =  SolicitudesArticulosModels::listar($id);
+
+                        Funciones::enviarMail("Solicitud para editar o eliminar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
+
+                }
+
             return response()->json($post);
        
 }

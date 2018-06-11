@@ -57,7 +57,10 @@ class SolicitudesArticulosModels
 
     static public function insertar($id_articulo,$motivo,$id_tipo_acciones)
     {
-        DB::table('solicitudes_articulos')->insert(
+
+
+
+ return $lastInsertID= DB::table('solicitudes_articulos')->insertGetId(
             ['id_articulo' => $id_articulo, 'motivo' => $motivo,  'id_tipo_acciones' => $id_tipo_acciones, 'status'=> 'en proceso', 'created_at' => DB::raw("now()"), 'creado_por'=>Auth::user()->id]
         );
 
@@ -79,16 +82,7 @@ class SolicitudesArticulosModels
 
 
 
-    static public function show_cargo($id_cargo){
 
-
-        $data = DB::table('solicitudes_articulos')
-            ->where('id', $id_cargo)
-            ->select('id','nombre', 'descripcion', 'activo')
-            ->first();
-        return $data;
-
-    }
 
 
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\models\ArticulosModels;
-
+use App\models\SolicitudesArticulosModels;
 use App\models\ListaModels;
 use App\models\LogsistemaModels;
 use Illuminate\Http\Request;
@@ -12,6 +12,7 @@ use DB;
 use Input;
 use Illuminate\Support\Facades\Response;
 use Entrust;
+use App\Funciones;
 
 class ArticulosController extends Controller
 {
@@ -278,6 +279,23 @@ class ArticulosController extends Controller
         if($sa!='')
         {
             LogsistemaModels::insertar('SOLICITUD ARTICULO','EDIT:'. $sa);
+                        $emails=array();
+                        $users = Funciones::userRoles("inventario");
+
+                        foreach ($users  as $key => $value) {
+                            $emails[$key ]= $value["email"];
+                        }
+
+
+                        $data_solicitudesarticulos =  SolicitudesArticulosModels::listar($sa);
+
+                        Funciones::enviarMail("Ya fue procesado su solicitud para editar o eliminar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
+
+
+
+
+
+
             return redirect('solicitudesarticulos');
         }
         return redirect('articulos');
@@ -302,6 +320,19 @@ class ArticulosController extends Controller
 
         if($solicitudarticulo!='')
         {
+            $emails=array();
+                        $users = Funciones::userRoles("inventario");
+
+                        foreach ($users  as $key => $value) {
+                            $emails[$key ]= $value["email"];
+                        }
+
+
+                        $data_solicitudesarticulos =  SolicitudesArticulosModels::listar($solicitudarticulo);
+
+                        Funciones::enviarMail("Ya fue procesado su solicitud para editar o eliminar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
+
+
             LogsistemaModels::insertar('SOLICITUD ARTICULO','DELETE:'. $solicitudarticulo);
         }
 
