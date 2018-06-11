@@ -2,8 +2,8 @@ $( document ).ready(function() {
   // Handler for .ready() called.
 url_base = $("#url_base").val();
 
-setInterval(IniciarNotificaciones, 10000);
-setInterval(ListaNotificaciones, 10000);
+setInterval(IniciarNotificaciones, 20000);
+setInterval(ListaNotificaciones, 20000);
 
 
 IniciarNotificaciones();
@@ -34,7 +34,7 @@ $("#lista_notificaciones").empty();
         $.each(result, function(i, field){
 		
 		text = "<li class='divider'></li>";
-		text += "<li><a href='"+url_base+"/"+field.url+"' class='mensaje' data-mensaje='"+field.id+"'>";
+		text += "<li class=leido_"+field.leido+"><a href='"+url_base+"/"+field.url+"' class='mensaje' data-mensaje='"+field.id+"'>";
 		text += "<div class='dropdown-messages-box'>";
 		text += "<div class='media-body'>";
 		text += field.mensaje+"<br>";

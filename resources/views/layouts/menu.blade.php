@@ -119,7 +119,7 @@
             <li class=" @if (Route::getCurrentRoute()->getPath() == 'configuracion')
                     active
                 @endif ">
-                <a href="{{ url('configuracion') }}"><i class="fa fa-university" aria-hidden="true"></i> <span class="nav-label">Configuraci&oacute;n</span></a>
+                <a href="{{ url('configuracion') }}"><i class="fa fa-cog" aria-hidden="true"></i> <span class="nav-label">Configuraci&oacute;n</span></a>
 
             </li>
             @endrole

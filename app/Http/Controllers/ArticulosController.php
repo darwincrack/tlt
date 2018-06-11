@@ -291,7 +291,7 @@ class ArticulosController extends Controller
         if($sa!='')
         {
 
-            NotificacionesModels::insertar("inventario","Ya fue procesada su solicitud editar un Artículo", "solicitudesarticulos");
+            NotificacionesModels::insertar("inventario","Ya fue procesada su solicitud #".$sa." <strong>editar</strong> un Artículo", "solicitudesarticulos");
             LogsistemaModels::insertar('SOLICITUD ARTICULO','EDIT:'. $sa);
                         $emails=array();
                         $users = Funciones::userRoles("inventario");
@@ -303,7 +303,7 @@ class ArticulosController extends Controller
 
                         $data_solicitudesarticulos =  SolicitudesArticulosModels::listar($sa);
 
-                        Funciones::enviarMail("Ya fue procesado su solicitud para editar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
+                        Funciones::enviarMail("Ya fue procesado su solicitud #".$sa.", para editar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
 
 
 
@@ -335,7 +335,7 @@ class ArticulosController extends Controller
         if($solicitudarticulo!='')
         {
 
-            NotificacionesModels::insertar("inventario","Ya fue procesado su solicitud eliminar un Artículo", "solicitudesarticulos");
+            NotificacionesModels::insertar("inventario","Ya fue procesado su solicitud # ".$solicitudarticulo.", <strong>eliminar</strong> un Artículo", "solicitudesarticulos");
 
             $emails=array();
                         $users = Funciones::userRoles("inventario");
@@ -347,7 +347,7 @@ class ArticulosController extends Controller
 
                         $data_solicitudesarticulos =  SolicitudesArticulosModels::listar($solicitudarticulo);
 
-                        Funciones::enviarMail("Ya fue procesado su solicitud para eliminar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
+                        Funciones::enviarMail("Ya fue procesado su solicitud # ".$solicitudarticulo.", para eliminar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
 
 
             LogsistemaModels::insertar('SOLICITUD ARTICULO','DELETE:'. $solicitudarticulo);

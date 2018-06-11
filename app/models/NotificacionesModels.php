@@ -20,8 +20,9 @@ class NotificacionesModels
        if($rol)
        {
             $data = DB::table('notificaciones')
+            ->limit(5)
+            ->orderBy('created_at', 'desc')
             ->where('rol', $rol)
-            ->where('leido', 0)
               ->select( '*',  DB::raw("DATE_FORMAT(created_at, '%d-%m-%Y %T') as fecha"));
             return $data->get();
        }

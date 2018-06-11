@@ -164,7 +164,7 @@ return $users[1]["email"];*/
 
            $id_solicitudArticulo= SolicitudesArticulosModels::insertar($id_articulo,$motivo,$tipo_accion);
 
-            NotificacionesModels::insertar("admin","Solicitud para editar o eliminar un Artículo", "solicitudesarticulos");
+            NotificacionesModels::insertar("admin","Solicitud # ".$id_solicitudArticulo.", para <strong>editar o eliminar</strong> un Artículo", "solicitudesarticulos");
 
             LogsistemaModels::insertar('SOLICITUDES ARTICULOS','INSERT');
 
@@ -184,7 +184,7 @@ return $users[1]["email"];*/
        
 
 
-        Funciones::enviarMail("Solicitud para editar o eliminar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
+        Funciones::enviarMail("Solicitud # ".$id_solicitudArticulo.", para editar o eliminar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
 
 
 
@@ -219,7 +219,7 @@ function autorizarInformatica($id,$valor)
             LogsistemaModels::insertar('SOLICITUDES ARTICULOS','AUTORIZAR INFORMATíCA, ID SOLICITUD DE ARTICULO:'. $id);
 
 
-            NotificacionesModels::insertar("informatica","Solicitud para editar o eliminar un Artículo", "solicitudesarticulos");
+            NotificacionesModels::insertar("informatica","Solicitud #".$id.", para <strong>editar o eliminar</strong> un Artículo", "solicitudesarticulos");
 
 
                 if($valor==1)
@@ -234,7 +234,7 @@ function autorizarInformatica($id,$valor)
 
                         $data_solicitudesarticulos =  SolicitudesArticulosModels::listar($id);
 
-                        Funciones::enviarMail("Solicitud para editar o eliminar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
+                        Funciones::enviarMail("Solicitud #".$id.", para editar o eliminar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
 
                 }
 

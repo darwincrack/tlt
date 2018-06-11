@@ -8427,3 +8427,9 @@ input:not(#email):not(#password)
 .falta-danger{
   color: white;
 }
+
+
+.leido_0{
+  background: #f3f3f3;
+}
+    
