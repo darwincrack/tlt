@@ -260,7 +260,7 @@ swal({
         var row = $(this).closest("tr").get(0);
         var id=$(row).find( ".eliminaredit" ).data("eliminaredit");
         $("#idx").val(id);
-        console.log($("#idx").val());
+
     });
 
 

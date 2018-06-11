@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 
 
 use App\models\SolicitudesArticulosModels;
+
 use App\models\LogsistemaModels;
+use App\models\NotificacionesModels;
 use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
 use App\Http\Requests\Requests;
@@ -151,36 +153,6 @@ return $users[1]["email"];*/
     {
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*$users = User::whereHas('roles', function ($query) {
-            $query->where('name', '=', 'admin');
- })->get();
-
-
-
-
-return print_r($users);
-*/
-
-
-
-
-
-
         $validator = Validator::make(Input::all(), $this->rules);
         if ($validator->fails()) {
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
@@ -191,6 +163,9 @@ return print_r($users);
             $id_articulo        =   $request->input("id");
 
            $id_solicitudArticulo= SolicitudesArticulosModels::insertar($id_articulo,$motivo,$tipo_accion);
+
+            NotificacionesModels::insertar("admin","Solicitud para editar o eliminar un Artículo", "solicitudesarticulos");
+
             LogsistemaModels::insertar('SOLICITUDES ARTICULOS','INSERT');
 
 
@@ -205,6 +180,9 @@ return print_r($users);
 
 
         $data_solicitudesarticulos =  SolicitudesArticulosModels::listar($id_solicitudArticulo);
+
+       
+
 
         Funciones::enviarMail("Solicitud para editar o eliminar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
 
@@ -239,6 +217,10 @@ function autorizarInformatica($id,$valor)
 
            $post= SolicitudesArticulosModels::autorizarInformatica($id,$valor);
             LogsistemaModels::insertar('SOLICITUDES ARTICULOS','AUTORIZAR INFORMATíCA, ID SOLICITUD DE ARTICULO:'. $id);
+
+
+            NotificacionesModels::insertar("informatica","Solicitud para editar o eliminar un Artículo", "solicitudesarticulos");
+
 
                 if($valor==1)
                 {

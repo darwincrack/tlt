@@ -64,6 +64,7 @@
 <!-- Custom and plugin javascript -->
 <script src="{{ URL::asset('assets/js/inspinia.js') }}"></script>
 <script src="{{ URL::asset('assets/js/plugins/pace/pace.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/notificaciones.js') }}"></script>
 
 <!-- App scripts -->
 @stack('scripts')

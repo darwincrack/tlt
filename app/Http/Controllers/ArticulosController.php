@@ -6,6 +6,7 @@ use App\models\ArticulosModels;
 use App\models\SolicitudesArticulosModels;
 use App\models\ListaModels;
 use App\models\LogsistemaModels;
+use App\models\NotificacionesModels;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use DB;
@@ -114,6 +115,17 @@ class ArticulosController extends Controller
 
         $data_ubicaciones            =  ListaModels::ubicaciones();
         $data_estados                =  ListaModels::estados();
+
+
+    if($solicitudarticulo!=""){
+         if(Entrust::hasRole(['informatica']))
+         { 
+                return view('articulos.editar', ['id_articulo' =>$id_articulo,'data_ubicaciones' => $data_ubicaciones, 'data_articulo' => $data_articulo,'data_estados' => $data_estados,'solicitudarticulo'=>$solicitudarticulo]);
+         }
+
+    }
+
+
 
 
          if(Entrust::hasRole(['admin']))
@@ -278,6 +290,8 @@ class ArticulosController extends Controller
 
         if($sa!='')
         {
+
+            NotificacionesModels::insertar("inventario","Ya fue procesada su solicitud editar un Artículo", "solicitudesarticulos");
             LogsistemaModels::insertar('SOLICITUD ARTICULO','EDIT:'. $sa);
                         $emails=array();
                         $users = Funciones::userRoles("inventario");
@@ -289,7 +303,7 @@ class ArticulosController extends Controller
 
                         $data_solicitudesarticulos =  SolicitudesArticulosModels::listar($sa);
 
-                        Funciones::enviarMail("Ya fue procesado su solicitud para editar o eliminar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
+                        Funciones::enviarMail("Ya fue procesado su solicitud para editar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
 
 
 
@@ -320,6 +334,9 @@ class ArticulosController extends Controller
 
         if($solicitudarticulo!='')
         {
+
+            NotificacionesModels::insertar("inventario","Ya fue procesado su solicitud eliminar un Artículo", "solicitudesarticulos");
+
             $emails=array();
                         $users = Funciones::userRoles("inventario");
 
@@ -330,7 +347,7 @@ class ArticulosController extends Controller
 
                         $data_solicitudesarticulos =  SolicitudesArticulosModels::listar($solicitudarticulo);
 
-                        Funciones::enviarMail("Ya fue procesado su solicitud para editar o eliminar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
+                        Funciones::enviarMail("Ya fue procesado su solicitud para eliminar un Artículo",$data_solicitudesarticulos,$emails,"emails.solicitudesarticulos");
 
 
             LogsistemaModels::insertar('SOLICITUD ARTICULO','DELETE:'. $solicitudarticulo);

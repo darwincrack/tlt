@@ -135,6 +135,11 @@ Route::get('logsistema', 'LogsistemaController@index');
 Route::get('logsistema/data', 'LogsistemaController@anyData');
 
 
+Route::get('notificaciones', 'NotificacionesController@index');
+Route::get('notificaciones/data', 'NotificacionesController@anyData');
+Route::get('notificaciones/count', 'NotificacionesController@count');
+Route::get('notificaciones/listar', 'NotificacionesController@listar');
+Route::get('notificaciones/leido/{id}', 'NotificacionesController@leido')->where('id','[0-9]+');
 
 
 Route::get('solicitudesarticulos', 'SolicitudesArticulosController@index');

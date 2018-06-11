@@ -126,12 +126,12 @@
 
 
     @role(['admin','inventario','seguridad','informatica']) 
-           <li class=" @if (Route::getCurrentRoute()->getPath() == 'notificaciones')
+          <!-- <li class=" @if (Route::getCurrentRoute()->getPath() == 'notificaciones')
                     active
                 @endif ">
                 <a href="{{ url('notificaciones') }}"><i class="fa fa-bell" aria-hidden="true"></i> <span class="nav-label">notificaciones</span> </a>
 
-            </li>
+            </li>-->
     @endrole 
 
 
