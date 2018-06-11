@@ -99,20 +99,58 @@ return $users[1]["email"];*/
 
             ->editColumn('ver_articulo', function ($solicitudesarticulos) {
 
+                    if(trim($solicitudesarticulos->status)=="en proceso")
+                    {
+
+                         if(Entrust::hasRole(['admin','informatica']))
+                            {
+                                  return '<a href="articulos/editar/'.$solicitudesarticulos->idArticulo.'/'.$solicitudesarticulos->idSolicitud.'" class="btn btn-xs btn-primary editar"><i class="glyphicon glyphicon-edit"></i> Edit</a> 
+
+                                  <a data-eliminar="'.$solicitudesarticulos->idArticulo.'" data-eliminarsolicitud="'.$solicitudesarticulos->idSolicitud.'" class="btn btn-xs btn-danger delete" title="Recuerde que al eliminar, borra permanentemente este articulo"><i class="glyphicon glyphicon-trash"></i> Eliminar</a>';
+
+                
+                            }
+                            else{
+                           return '<a href="articulos/editar/'.$solicitudesarticulos->idArticulo.'" class="btn btn-xs btn-primary editar"><i class="glyphicon glyphicon-eye"></i> Ver</a>';
+                               
+                            }
 
 
-                if(Entrust::hasRole(['admin','informatica']))
-                {
-                      return '<a href="articulos/editar/'.$solicitudesarticulos->idArticulo.'/'.$solicitudesarticulos->idSolicitud.'" class="btn btn-xs btn-primary editar"><i class="glyphicon glyphicon-edit"></i> Edit</a> 
 
-                      <a data-eliminar="'.$solicitudesarticulos->idArticulo.'" data-eliminarsolicitud="'.$solicitudesarticulos->idSolicitud.'" class="btn btn-xs btn-danger delete" title="Recuerde que al eliminar, borra permanentemente este articulo"><i class="glyphicon glyphicon-trash"></i> Eliminar</a>';
 
-    
-                }
-                else{
-               return '<a href="articulos/editar/'.$solicitudesarticulos->idArticulo.'" class="btn btn-xs btn-primary editar"><i class="glyphicon glyphicon-eye"></i> Ver</a>';
-                   
-                }
+
+                    }
+                    else
+                    {
+
+                           if(Entrust::hasRole(['admin']))
+                                        {
+                                              return '<a href="articulos/editar/'.$solicitudesarticulos->idArticulo.'/'.$solicitudesarticulos->idSolicitud.'" class="btn btn-xs btn-primary editar"><i class="glyphicon glyphicon-edit"></i> Edit</a> 
+
+                                              <a data-eliminar="'.$solicitudesarticulos->idArticulo.'" data-eliminarsolicitud="'.$solicitudesarticulos->idSolicitud.'" class="btn btn-xs btn-danger delete" title="Recuerde que al eliminar, borra permanentemente este articulo"><i class="glyphicon glyphicon-trash"></i> Eliminar</a>';
+
+                            
+                                        }
+                                        else{
+                                       return '<a href="articulos/editar/'.$solicitudesarticulos->idArticulo.'" class="btn btn-xs btn-primary editar"><i class="glyphicon glyphicon-eye"></i> Ver</a>';
+                                           
+                                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    }
+
+   
 
               
 
