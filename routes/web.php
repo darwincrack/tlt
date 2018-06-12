@@ -31,6 +31,7 @@ Route::get('personal/subgrupo/get/{id_grupo}', 'PersonalController@select_subgru
 
 Route::get('personal/get/{grupo?}/{subgrupo?}', 'PersonalController@select_personal')->where(['grupo'=>'[0-9]+', 'subgrupo' => '[0-9]+']);
 
+Route::post('personal/guardarfoto', 'PersonalController@guardarfoto');
 
 
 

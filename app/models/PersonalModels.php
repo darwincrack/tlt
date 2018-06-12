@@ -25,7 +25,7 @@ class PersonalModels
             ->join('departamentos', 'personal.id_departamento', '=', 'departamentos.id')
             ->join('ubicacion', 'personal.id_ubicacion', '=', 'ubicacion.id')
             ->orderBy('personal.id','desc')
-            ->select('personal.id as idPersonal', 'personal.nombre', 'picture','nro_empleado', 'huella','id_ubicacion','id_cargo','id_departamento','cargos.nombre as cargo', 'departamentos.nombre as departamento', 'ubicacion.nombre as ubicacion' );
+            ->select('personal.id as idPersonal', 'personal.nombre', 'picture','nro_empleado', 'huella','id_ubicacion','id_cargo','id_departamento','cargos.nombre as cargo', 'departamentos.nombre as departamento', 'ubicacion.nombre as ubicacion','personal.picture' );
 
         return $data->get();
         }
@@ -37,7 +37,7 @@ class PersonalModels
             ->join('cargos', 'personal.id_cargo', '=', 'cargos.id')
             ->join('departamentos', 'personal.id_departamento', '=', 'departamentos.id')
             ->join('ubicacion', 'personal.id_ubicacion', '=', 'ubicacion.id')
-            ->select('personal.id as idPersonal', 'personal.nombre', 'picture','nro_empleado', 'huella','id_ubicacion','id_cargo','id_departamento','cargos.nombre as cargo', 'departamentos.nombre as departamento', 'ubicacion.nombre as ubicacion')
+            ->select('personal.id as idPersonal', 'personal.nombre', 'picture','nro_empleado', 'huella','id_ubicacion','id_cargo','id_departamento','cargos.nombre as cargo', 'departamentos.nombre as departamento', 'ubicacion.nombre as ubicacion','personal.picture')
             ->first();
         return $data;
 
@@ -46,22 +46,22 @@ class PersonalModels
 
     }
 
-    static public function insertar($nro_empleado,$nombre,$departamento,$cargo,$ubicacion)
+    static public function insertar($nro_empleado,$nombre,$departamento,$cargo,$ubicacion,$picture)
     {
 
 
         $lastInsertID= DB::table('personal')->insertGetId(
-            [ 'nro_empleado' => $nro_empleado, 'nombre' => $nombre, 'id_ubicacion' => $ubicacion, 'id_cargo' => $cargo, 'id_departamento' => $departamento]
+            [ 'nro_empleado' => $nro_empleado, 'nombre' => $nombre, 'id_ubicacion' => $ubicacion, 'id_cargo' => $cargo, 'id_departamento' => $departamento, 'picture'=>$picture]
         );
 
     }
 
 
-    static public function editar($id_personal,$nro_empleado,$nombre,$departamento,$cargo,$ubicacion)
+    static public function editar($id_personal,$nro_empleado,$nombre,$departamento,$cargo,$ubicacion,$picture)
     {
         DB::table('personal')
             ->where('id', $id_personal)
-            ->update( ['nro_empleado' => $nro_empleado, 'nombre' => $nombre, 'id_ubicacion' => $ubicacion, 'id_cargo' => $cargo, 'id_departamento' => $departamento]);
+            ->update( ['nro_empleado' => $nro_empleado, 'nombre' => $nombre, 'id_ubicacion' => $ubicacion, 'id_cargo' => $cargo, 'id_departamento' => $departamento, 'picture'=>$picture]);
     }
 
 

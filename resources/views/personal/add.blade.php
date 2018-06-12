@@ -100,7 +100,7 @@
                     <div class="form-group"><label class="col-sm-2 control-label">Ubicación</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" class="form-control m-b" name="ubicacion" id="ubicacion" data-rec="">
+                            <select class="form-control" class="form-control m-b" name="ubicacion" id="ubicacion" >
                         
 
                             @foreach($data_ubicaciones as $data_ubicacion)
@@ -111,7 +111,36 @@
                     </div>
 
 
+<br>
+    <div class="col-lg-12"><h3>Foto</h3><hr></div>
+    <div class="form-group">
+        <div class="col-sm-2 "></div>
+        <div class="col-sm-4 ">
 
+            <div id="my_camera" style="width:320px; height:240px;"></div>
+            <br>
+
+
+            <div id="pre_take_buttons">
+                    <input type=button class="btn btn-danger" value="Nueva Foto" onClick="preview_snapshot()">
+            </div>
+
+            <div id="post_take_buttons" style="display:none">
+                <input type=button class="btn" value="&lt; Hacer Otra" onClick="cancel_preview()">
+                <input type=button class="btn btn-primary" value="Guardar Foto &gt;" onClick="save_photo()" style="font-weight:bold;">
+            </div>
+        </div>
+
+        <div class="col-sm-1 "></div>
+        <div class="col-sm-4 ">
+        <div id="results">
+            
+        </div>
+    </div>
+</div>
+
+
+    <input type="hidden" id="namafoto"  name="namafoto" value="">
 
 
 
@@ -140,6 +169,9 @@
 <script src="{{ URL::asset('assets/js/plugins/datapicker/bootstrap-datepicker.es.js') }}"></script>
 
 <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+<script src="{{ URL::asset('assets/js/plugins/webcamjs/webcam.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/camara.js') }}"></script>
+
 
 @endpush
 

@@ -156,11 +156,21 @@ class PersonalController extends Controller
         $departamento             =   $request->input("departamento");
         $cargo                    =   $request->input("cargo");
         $ubicacion                =   $request->input("ubicacion");
+        $namafoto                 =    "";
+
+              if($request->input("namafoto")){
+                  $encoded_data = $request->input("namafoto");
+                    $binary_data = base64_decode( $encoded_data );
+ 
+                    // save to server (beware of permissions // set ke 775 atau 777)
+                    $namafoto = uniqid().".png";
+                    $result = file_put_contents( 'assets/img/personal/'.$namafoto, $binary_data );
+                    if (!$result) die("Could not save image!  Check file permissions.");
+
+            }
 
 
-
-
-        PersonalModels::insertar($nro_empleado,$nombre,$departamento,$cargo,$ubicacion);
+        PersonalModels::insertar($nro_empleado,$nombre,$departamento,$cargo,$ubicacion,$namafoto);
         LogsistemaModels::insertar('PERSONAL','INSERT');
 
         $request->session()->flash('alert-success', 'Personal agregado con exito!!');
@@ -186,14 +196,24 @@ class PersonalController extends Controller
         $departamento             =   $request->input("departamento");
         $cargo                    =   $request->input("cargo");
         $ubicacion                =   $request->input("ubicacion");
+        $namafoto                =   $request->input("fotoactual");
+
+              if($request->input("namafoto")){
+                  $encoded_data = $request->input("namafoto");
+                    $binary_data = base64_decode( $encoded_data );
+ 
+                    // save to server (beware of permissions // set ke 775 atau 777)
+                    $namafoto = uniqid().".png";
+                    $result = file_put_contents( 'assets/img/personal/'.$namafoto, $binary_data );
+                    if (!$result) die("Could not save image!  Check file permissions.");
+
+            }
+  
 
 
 
 
-
-
-
-        PersonalModels::editar($id_personal,$nro_empleado,$nombre,$departamento,$cargo,$ubicacion);
+        PersonalModels::editar($id_personal,$nro_empleado,$nombre,$departamento,$cargo,$ubicacion,$namafoto);
         LogsistemaModels::insertar('PERSONAL','EDIT');
         $request->session()->flash('alert-success', 'Personal editado con exito!!');
 
@@ -205,6 +225,19 @@ class PersonalController extends Controller
 
 
 
+    public function guardarfoto(Request $request)
+    {
+
+            if($request->input("namafoto")){
+                  $encoded_data = $request->input("namafoto");
+                    $binary_data = base64_decode( $encoded_data );
+ 
+                    // save to server (beware of permissions // set ke 775 atau 777)
+                    $namafoto = "darwinnn.png";
+                    $result = file_put_contents( '/'.$namafoto, $binary_data );
+                    if (!$result) die("Could not save image!  Check file permissions.");
+                }
+    }
 
 
 
