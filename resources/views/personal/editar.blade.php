@@ -267,6 +267,15 @@
                     </div>
 
 
+ <video id="video"></video>
+    <br>
+    <button id="boton">Tomar foto</button>
+    <p id="estado"></p>
+    <canvas id="canvas" style="display: none;"></canvas>
+
+
+
+
 
 
                     <div class="form-group"><label class="col-sm-2 control-label">Ubicación</label>
@@ -278,7 +287,7 @@
                        
                                 @foreach($data_ubicaciones as $data_ubicacion)
 
-                                    <option value="{{$data_ubicacion->id}}"  {{($data_ubicacion->id==$data_articulo->id_ubicacion)?"selected":""}}>
+                                    <option value="{{$data_ubicacion->id}}"  {{($data_ubicacion->id==$data_personal->id_ubicacion)?"selected":""}}>
                                         {{$data_ubicacion->nombre}}
                                     </option>
                                     
@@ -311,6 +320,8 @@
 <script src="{{ URL::asset('assets/js/plugins/datapicker/bootstrap-datepicker.es.js') }}"></script>
 
 <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+<script src="{{ URL::asset('assets/js/camara.js') }}"></script>
+
 
 @endpush
 

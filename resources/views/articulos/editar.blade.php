@@ -292,7 +292,7 @@ else
 
  @endrole
 
-
+   
 
 
 
@@ -319,6 +319,7 @@ else
 <script src="{{ URL::asset('assets/js/plugins/datapicker/bootstrap-datepicker.es.js') }}"></script>
 
 <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+
 
 @endpush
 
