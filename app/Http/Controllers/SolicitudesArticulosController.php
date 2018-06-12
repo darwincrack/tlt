@@ -59,7 +59,7 @@ return $users[1]["email"];*/
                 if($solicitudesarticulos->nombre_tipo_accion!=''){
 
                     if(strtolower($solicitudesarticulos->nombre_tipo_accion)=="editar"){
-                        return "<label class='label label-primary green'> ".$solicitudesarticulos->nombre_tipo_accion."</label>";
+                        return "<label class='label label-primary grey'> ".$solicitudesarticulos->nombre_tipo_accion."</label>";
                     }
                     elseif(strtolower($solicitudesarticulos->nombre_tipo_accion)=="eliminar"){
                         return "<label class='label label-danger'>".$solicitudesarticulos->nombre_tipo_accion."</label>";
@@ -163,15 +163,7 @@ return $users[1]["email"];*/
                     $xx->addColumn('autorizar_informatica', function ($solicitudesarticulos)  {
 
                            $xxx=($solicitudesarticulos->autorizado>=1)?'checked=':'null';
-                              return "  <div class='switch'>
-                                <div class='onoffswitch'>
-                                    <input type='checkbox' data-autorizarinformatica='".$solicitudesarticulos->idSolicitud."'    class='onoffswitch-checkbox' id='calidad_prestamo_".$solicitudesarticulos->idSolicitud."' name='calidad_prestamo' value='1' ".$xxx." >
-                                    <label class='onoffswitch-label' for='calidad_prestamo_".$solicitudesarticulos->idSolicitud."'>
-                                        <span class='onoffswitch-inner'></span>
-                                        <span class='onoffswitch-switch'></span>
-                                    </label>
-                                </div>
-                            </div>";
+                              return " <input data-autorizarinformatica='".$solicitudesarticulos->idSolicitud."' class='autorizarinformatica' type='checkbox' value='' ".$xxx."> ";
 
 
                     });

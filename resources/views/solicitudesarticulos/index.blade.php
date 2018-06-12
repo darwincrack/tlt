@@ -19,6 +19,12 @@
 }
 
 
+    .label-primary.grey, .badge-primary.grey {
+    background-color: #afafaf;
+    color: #FFFFFF;
+}
+
+
 .onoffswitch-inner:before {
     content: "SI";
 
@@ -30,10 +36,14 @@
 
 }
 
+
+
+
 </style>
 <link rel="stylesheet" href="{{ URL::asset('assets/css/plugins/toastr/toastr.min.css') }}">
 
 <link rel="stylesheet" href="{{ URL::asset('assets/css/plugins/dataTables/dataTables.min.css') }}">
+
 @endpush
 
 @section('title', 'Solicitudes Artículos')
@@ -66,7 +76,7 @@
             <th>Estado</th>
             <th>Acción</th>
             @role(['admin']) 
-              <th>Autorizar Informatica</th>
+              <th>Autorizar a Informatica</th>
             @endrole
 
         </tr>
@@ -125,6 +135,8 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script src="{{ URL::asset('assets/js/plugins/dataTables/datatables.min.js') }}"></script>
+
+
 <script>
     $(function() {
         $('#users-table').DataTable({
@@ -140,13 +152,13 @@
                 {data: 'idSolicitud', name: 'idSolicitud'},
                 {data: 'nombre_articulo', name: 'nombre_articulo'},    
                 {data: 'codigo_barra', name: 'codigo_barra'},
-                {data: 'motivo', name: 'motivo', "width": "27%"},
+                {data: 'motivo', name: 'motivo', "width": "15%"},
                 {data: 'fecha_solicitud', name: 'fecha_solicitud'},
 
 
                 {data: 'nombre_tipo_accion', name: 'nombre_tipo_accion', "width": "3%"},
-                {data: 'status', name: 'status'},
-                {data: 'ver_articulo', name: 'ver_articulo', orderable: false, searchable: false, "width": "14%"}
+                {data: 'status', name: 'status', "width": "3%"},
+                {data: 'ver_articulo', name: 'ver_articulo', orderable: false, searchable: false, "width": "8%"}
                 @role(['admin']) 
                 ,{data: 'autorizar_informatica', name: 'autorizar_informatica', orderable: false, searchable: false, "width": "3%"}
                 @endrole
@@ -265,15 +277,19 @@ swal({
 
 
 
-    $('#users-table tbody').on( 'click', '.onoffswitch-checkbox', function (event) {
+
+
+
+    $('#users-table tbody').on( 'click', '.autorizarinformatica', function (event) {
+
         var valor = 0;
         var row = $(this).closest("tr").get(0);
-        var id=$(row).find( ".onoffswitch-checkbox" ).data("autorizarinformatica");
+        var id=$(row).find( ".autorizarinformatica" ).data("autorizarinformatica");
         var valor =$(row).val();
 
 
 
-        if( $(row).find( ".onoffswitch-checkbox" ).prop('checked') ) {
+        if( $(row).find( ".autorizarinformatica" ).prop('checked') ) {
             valor = 1;
         }
         else{
@@ -464,5 +480,23 @@ function toasterOptions() {
 
 
 </script>
+
+
+        <script>
+           /* $(document).ready(function () {
+
+
+                $('#users-table').on('draw.dt', function () {
+                    $('.i-checks').iCheck({
+                                    checkboxClass: 'icheckbox_square-green',
+                                    radioClass: 'iradio_square-green',
+                                });
+                });
+
+
+
+                
+            });*/
+        </script>
 
 @endpush
