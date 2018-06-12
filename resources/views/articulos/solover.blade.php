@@ -1,10 +1,13 @@
 @extends('layouts.template')
 
 @push('boton_accion')
-<a href="{{ url('/articulo/add') }}" class="btn btn-primary">
-    <span class="glyphicon glyphicon-plus"></span>
-    Nuevo Articulo
-</a>
+  @role(['admin','inventario'])
+    <a href="{{ url('/articulos/add') }}" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus"></span>
+        Nuevo Articulo
+    </a>
+
+ @endrole
 @endpush
 
 @push('css')

@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @push('boton_accion')
-<a href="{{ url('/articulo/add') }}" class="btn btn-primary">
+<a href="{{ url('/articulos/add') }}" class="btn btn-primary">
     <span class="glyphicon glyphicon-plus"></span>
     Nuevo Artículo
 </a>

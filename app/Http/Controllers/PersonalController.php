@@ -41,7 +41,7 @@ class PersonalController extends Controller
             
             ->addColumn('action', function ($personal)  {
 
-                if(Entrust::hasRole(['admin', 'operador']))
+                if(Entrust::hasRole(['admin', 'inventario']))
                 {
                       return '<a href="personal/editar/'.$personal->idPersonal.'" class="btn btn-xs btn-primary editar"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
                 }
