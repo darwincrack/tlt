@@ -101,11 +101,16 @@ class PersonalController extends Controller
     public function add()
     {
 
+      /* $data_departamentos      =  ListaModels::departamentos();
+        $data_grupo_personals    =  ListaModels::grupoPersonal();
+        $data_generos    =  ListaModels::genero();*/
 
         $data_departamentos          =  ListaModels::departamentos();
         $data_cargos                 =  ListaModels::cargos();
         $data_ubicaciones            =  ListaModels::ubicaciones();
 
+       // return view('procedencia.add', ['data_tipo_procedencias' => $data_tipo_procedencias, 'data_ciudades' =>$data_ciudades]);
+       // return view('personal.add');
          return view('personal.add', ['data_departamentos' => $data_departamentos,'data_cargos' => $data_cargos, 'data_ubicaciones' => $data_ubicaciones]);
 
 
@@ -116,6 +121,23 @@ class PersonalController extends Controller
     }
 
 
+    public function select_subgrupo($id_grupo=FALSE){
+
+        $data_subgrupos     = ListaModels::subGrupoPersonal($id_grupo);
+
+        return Response::json(['success'=>true,'data'=>$data_subgrupos]);
+    }
+
+
+
+    public function select_personal($id_grupo=FALSE, $id_subgrupo=FALSE){
+
+        $data_personal     = ListaModels::Personal($id_grupo,$id_subgrupo);
+
+        return Response::json(['success'=>true,'data'=>$data_personal]);
+    }
+
+
 
 
     public function editar($id_personal)
@@ -123,7 +145,7 @@ class PersonalController extends Controller
 
         $data_personal         =  PersonalModels::listar($id_personal);
 
-        if (count($data_personal)==0){
+        if ($data_personal==""){
             return redirect('personal');
         }
 
@@ -132,8 +154,10 @@ class PersonalController extends Controller
         $data_cargos                 =  ListaModels::cargos();
         $data_ubicaciones            =  ListaModels::ubicaciones();
 
+        /*$data_grupo_personals        =  ListaModels::grupoPersonal();*/
+        /*$data_sub_grupo_personals    =  ListaModels::subGrupoPersonal($data_personal->idSubGrupo);*/
         
-        return view('personal.editar', ['id_personal' =>$id_personal,'data_departamentos' => $data_departamentos, 'data_cargos' => $data_cargos, 'data_ubicaciones' => $data_ubicaciones, 'data_personal' => $data_personal]);
+        return view('personal.editar', ['id_persona' =>$id_personal,'data_departamentos' => $data_departamentos, 'data_cargos' => $data_cargos, 'data_ubicaciones' => $data_ubicaciones, 'data_personal' => $data_personal]);
 
 
     }
@@ -144,6 +168,7 @@ class PersonalController extends Controller
 
             $this->validate($request, [
                 'nombre' => 'required|max:50',
+
                 'nro_empleado' => 'required|numeric|unique:personal',
             ]
             );

@@ -109,7 +109,7 @@ class ArticulosController extends Controller
 
         $data_articulo         =  ArticulosModels::listar($id_articulo);
 
-        if (count($data_articulo)==0){
+        if ($data_articulo==""){
             return redirect('articulos');
         }
 
