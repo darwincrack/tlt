@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Entrust;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,20 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if(Entrust::hasRole(['admin']))
+        {
+            return view('articulos.index');
+        }
+
+        if(Entrust::hasRole(['informatica']))
+        {
+            return view('solicitudesarticulos.index');
+        }
+
+        if(Entrust::hasRole(['inventario']))
+        {
+            return view('articulos.index');
+        }
+
     }
 }

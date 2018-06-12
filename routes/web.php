@@ -17,8 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/', 'PersonalController@index');
-Route::get('/home', 'HomeController@index');
+//Route::get('/', 'PersonalController@index');
+Route::get('/', 'HomeController@index');
 
 
 Route::get('personal', 'PersonalController@index');

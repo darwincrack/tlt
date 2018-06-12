@@ -3,7 +3,7 @@
 @push('boton_accion')
 <a href="{{ url('/articulos/add') }}" class="btn btn-primary">
     <span class="glyphicon glyphicon-plus"></span>
-    Nuevo Articulo
+    Nuevo Artículo
 </a>
 @endpush
 
