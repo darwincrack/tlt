@@ -100,7 +100,7 @@ class DepartamentoController extends Controller
        $data_departamento         =  departamentoModels::show_departamento($id_departamento);
 
 
-        if (count($data_departamento)==0){
+        if ($data_departamento==""){
             return redirect('departamento');
         }
         return view('departamento.editar', ['id_departamento'=>$id_departamento, 'data_departamento' =>$data_departamento]);

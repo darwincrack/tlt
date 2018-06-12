@@ -123,7 +123,7 @@ class PersonalController extends Controller
 
         $data_personal         =  PersonalModels::listar($id_personal);
 
-        if (count($data_personal)==0){
+        if ($data_personal==""){
             return redirect('personal');
         }
 

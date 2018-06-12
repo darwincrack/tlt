@@ -100,7 +100,7 @@ class UbicacionController extends Controller
        $data_ubicacion         =  ubicacionModels::show_ubicacion($id_ubicacion);
 
 
-        if (count($data_ubicacion)==0){
+        if ($data_ubicacion==""){
             return redirect('ubicacion');
         }
         return view('ubicacion.editar', ['id_ubicacion'=>$id_ubicacion, 'data_ubicacion' =>$data_ubicacion]);

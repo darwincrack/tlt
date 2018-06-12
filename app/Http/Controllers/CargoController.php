@@ -100,7 +100,7 @@ class CargoController extends Controller
        $data_cargo         =  cargoModels::show_cargo($id_cargo);
 
 
-        if (count($data_cargo)==0){
+        if ($data_cargo==""){
             return redirect('cargo');
         }
         return view('cargo.editar', ['id_cargo'=>$id_cargo, 'data_cargo' =>$data_cargo]);

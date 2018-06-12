@@ -209,19 +209,8 @@ class ConfiguracionController extends Controller
 
 
 
-    public function editar_diasferiados($id_feriado)
-    {
-
-        $data_feriados         =  ConfiguracionModels::diasferiados($id_feriado);
-
-        if (count($data_feriados)==0){
-            return redirect('personal');
-        }
-
-        return view('configuracion.diasferiados.editar', ['id_feriado' =>$id_feriado,'data_feriados' => $data_feriados ]);
 
 
-    }
 
 
 
