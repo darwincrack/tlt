@@ -224,6 +224,8 @@
 
 
 
+
+
                     <div class="form-group{{ $errors->has('costo_actual_bs') ? ' has-error' : '' }}"><label class="col-lg-2 control-label">Costo Actual Bs</label>
 
                         <div class="col-lg-10"><input type="text" name="costo_actual_bs" placeholder="Ejemplo:" class="form-control" value="{{ $data_articulo->costo_actual_bs }}"> @if ($errors->has('costo_actual_bs'))
