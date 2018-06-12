@@ -191,6 +191,8 @@ class PersonalController extends Controller
 
 
 
+
+
         PersonalModels::editar($id_personal,$nro_empleado,$nombre,$departamento,$cargo,$ubicacion);
         LogsistemaModels::insertar('PERSONAL','EDIT');
         $request->session()->flash('alert-success', 'Personal editado con exito!!');

@@ -76,6 +76,8 @@
 
 
 
+
+
                     <div class="form-group"><label class="col-sm-2 control-label">Cargo</label>
                         <div class="col-sm-10">
                             <select class="form-control" class="form-control m-b" name="cargo" id="cargo" >
