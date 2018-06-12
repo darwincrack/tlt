@@ -28,6 +28,7 @@ class NotificacionesModels
        }
        else{
             $data = DB::table('notificaciones')
+            ->where('rol', Auth::user()->roles->first()->name)
               ->select( '*',  DB::raw("DATE_FORMAT(created_at, '%d-%m-%Y %T') as fecha"));
             return $data;
        }
