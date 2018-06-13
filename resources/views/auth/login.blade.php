@@ -79,9 +79,9 @@
 
             <a href="{{ url('/password/reset') }}"><small>Clic si Olvidaste tu Contraseña</small></a>
 
-            <p class="text-muted text-center"><small>No tienes una cuenta?</small></p>
+           <!-- <p class="text-muted text-center"><small>No tienes una cuenta?</small></p>
 
-            <a class="btn btn-sm btn-white btn-block" href="{{ url('/register') }}">Crear una cuenta</a>
+            <a class="btn btn-sm btn-white btn-block" href="{{ url('/register') }}">Crear una cuenta</a>-->
 
         </form>
 
