@@ -149,18 +149,18 @@
             "order": [[ 0, "desc" ]],
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
             columns: [
-                {data: 'idSolicitud', name: 'idSolicitud'},
-                {data: 'nombre_articulo', name: 'nombre_articulo'},    
-                {data: 'codigo_barra', name: 'codigo_barra'},
-                {data: 'motivo', name: 'motivo', "width": "15%"},
-                {data: 'fecha_solicitud', name: 'fecha_solicitud'},
+                {data: 'idSolicitud', name: 'idSolicitud', "width": "3%"},
+                {data: 'nombre_articulo', name: 'nombre_articulo', "width": "3%"},    
+                {data: 'codigo_barra', name: 'codigo_barra', "width": "5%"},
+                {data: 'motivo', name: 'motivo', "width": "10%"},
+                {data: 'fecha_solicitud', name: 'fecha_solicitud', "width": "3%"},
 
 
                 {data: 'nombre_tipo_accion', name: 'nombre_tipo_accion', "width": "3%"},
                 {data: 'status', name: 'status', "width": "3%"},
-                {data: 'ver_articulo', name: 'ver_articulo', orderable: false, searchable: false, "width": "8%"}
+                {data: 'ver_articulo', name: 'ver_articulo', orderable: false, searchable: false, "width": "5%"}
                 @role(['admin']) 
-                ,{data: 'autorizar_informatica', name: 'autorizar_informatica', orderable: false, searchable: false, "width": "3%"}
+                ,{data: 'autorizar_informatica', name: 'autorizar_informatica', orderable: false, searchable: false, "width": "5%"}
                 @endrole
 
 

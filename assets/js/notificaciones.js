@@ -1,13 +1,25 @@
 $( document ).ready(function() {
   // Handler for .ready() called.
+
+  if(Notification.permission !== "granted"){
+            Notification.requestPermission();
+        }
+
 url_base = $("#url_base").val();
+totalnotificaciones = 0;
 
 setInterval(IniciarNotificaciones, 20000);
-setInterval(ListaNotificaciones, 20000);
+//setInterval(ListaNotificaciones, 20000);
+
+setInterval( function() { ListaNotificaciones(false); }, 20000 );
+
+
+setInterval( function() { ListaNotificaciones(true); }, 60000 );
+
 
 
 IniciarNotificaciones();
- ListaNotificaciones();
+ListaNotificaciones(false);
 
 
 function IniciarNotificaciones() {
@@ -27,11 +39,89 @@ function IniciarNotificaciones() {
 
 
 
-function ListaNotificaciones() {
+function ListaNotificaciones(notificacion) {
+
+
+
+var x=0;
 var text="";
-$("#lista_notificaciones").empty();
+
+
     $.getJSON(url_base+"/notificaciones/listar", function(result){
+
+      /*  if(result.length>0)
+        {
+            if(totalnotificaciones != result.length)
+            {
+                totalnotificaciones = result.length;
+                alert("nueva notificacion");
+            }
+        }*/
+      // totalnotificaciones = result.length;
+      console.log(result.length);
+
+$("#lista_notificaciones").empty();
         $.each(result, function(i, field){
+
+            if(notificacion==true)
+            {
+                if(x <= 5)
+                {
+                    if(field.leido==0){
+                        notificar("Notificación de Sistema",field.mensaje.replace(/<[^>]*>?/g, ''),url_base+"/"+field.url)
+                        x=x+1;
+                    }
+                }
+            }
+            else
+            {
+                if(i == 0)
+                {
+                    // Check browser support
+                    if (typeof(Storage) !== "undefined") {
+                        // Store
+
+                        if(localStorage.getItem("notificacion") !=field.id)
+                        {
+
+                              notificar("Notificación de Sistema",field.mensaje.replace(/<[^>]*>?/g, ''),url_base+"/"+field.url)
+                                localStorage.setItem("notificacion", field.id);
+                              /* console.log("enviar notificacion "+localStorage.getItem("notificacion"));
+                                */
+
+                        }
+                        else{
+                                   //console.log("la notificacion ya fue enviada "+localStorage.getItem("notificacion"));
+
+                        }
+
+                        /*localStorage.setItem("notificacion", field.id);
+                        // Retrieve
+                        console.log("darw "+localStorage.getItem("notificacion"));*/
+                    } else {
+                        console.log("Sorry, your browser does not support Web Storage...");
+                    }
+
+                }
+            }
+
+
+       /* if(result.length>0)
+        {
+            if(totalnotificaciones != result.length)
+            {
+                totalnotificaciones = result.length;
+              //  alert("nueva notificacion");
+                if (i==0){
+                notificar("Notificacion de Sistema",field.mensaje.replace(/<[^>]*>?/g, ''),url_base+"/"+field.url)
+
+                }
+            }
+        }*/
+
+
+
+         
 		
 		text = "<li class='divider'></li>";
 		text += "<li class=leido_"+field.leido+"><a href='"+url_base+"/"+field.url+"' class='mensaje' data-mensaje='"+field.id+"'>";
@@ -63,6 +153,25 @@ if(result.length >0){
 }
 
 
+
+
+        function notificar(titulo,body,url){
+            var logo = src = $('#logo').attr('src');
+            if(Notification.permission !== "granted"){
+                Notification.requestPermission();
+            }else{
+                var notificacion = new Notification(titulo,
+                    {
+                        icon: logo,
+                        body: body
+                    }
+                );
+                
+                notificacion.onclick = function(){
+                    window.open(url);
+                }
+            }
+        }
 
 
 

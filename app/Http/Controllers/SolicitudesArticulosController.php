@@ -32,7 +32,7 @@ class SolicitudesArticulosController extends Controller
 
     protected $rules =
     [
-        'motivo' => 'required|min:2|max:50'    ];
+        'motivo' => 'required|min:2|max:300'    ];
 
 
 

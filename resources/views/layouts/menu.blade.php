@@ -13,7 +13,7 @@
              {{Session::get('nombre_corto_sistema')}} 
 
             @elseif (Session::get('prioridad')==2) 
-                <img alt="image"  src="{{ URL::asset('assets/img/'.Session::get('logo')) }}" height="56px">
+                <img alt="image" id="logo"  src="{{ URL::asset('assets/img/'.Session::get('logo')) }}" height="56px">
             @endif
 
         @endif
