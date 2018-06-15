@@ -33,6 +33,9 @@ Route::get('personal/get/{grupo?}/{subgrupo?}', 'PersonalController@select_perso
 
 Route::post('personal/guardarfoto', 'PersonalController@guardarfoto');
 
+Route::get('personal/delete/{id}', 'PersonalController@eliminar')->where(['id','[0-9]+']);
+
+
 
 
 

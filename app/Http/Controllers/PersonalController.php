@@ -38,16 +38,51 @@ class PersonalController extends Controller
         return Datatables::of($personal)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             
             ->addColumn('action', function ($personal)  {
 
-                if(Entrust::hasRole(['admin', 'inventario']))
+
+return '<a href="personal/editar/'.$personal->idPersonal.'" class="btn btn-xs btn-primary editar"><i class="glyphicon glyphicon-edit"></i> Edit</a> 
+
+                      <a data-eliminar="'.$personal->idPersonal.'" class="btn btn-xs btn-danger delete" title="Recuerde que al eliminar, borra permanentemente"><i class="glyphicon glyphicon-trash"></i> Eliminar</a>';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               /* if(Entrust::hasRole(['admin', 'inventario']))
                 {
                       return '<a href="personal/editar/'.$personal->idPersonal.'" class="btn btn-xs btn-primary editar"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
                 }
                 else{
                     return '-';
-                }
+                }*/
                   
 
             })
@@ -242,6 +277,17 @@ class PersonalController extends Controller
 
 
 
+
+    public function eliminar($id_personal,Request $request)
+    {
+        PersonalModels::delete($id_personal);
+
+       
+
+        LogsistemaModels::insertar('PERSONAL','DELETE',$id_personal);
+        $request->session()->flash('alert-success', 'Persona  eliminado con exito!!');
+        return redirect('personal');
+    }
 
 
 

@@ -54,6 +54,8 @@
 
 
 <script src="{{ URL::asset('assets/js/plugins/dataTables/datatables.min.js') }}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script>
     $(function() {
         $('#users-table').DataTable({
@@ -104,6 +106,53 @@
             ]
         });
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+$(document).ready(function() {
+
+    var table = $('#users-table').DataTable();
+    $('#users-table tbody').on('click', '.delete', function(event) {
+        event.preventDefault();
+        swal({
+                title: "Estas seguro?",
+                text: "Una vez que se elimine, no podra recuperarlo nuevamente",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    var row = $(this).closest("tr").get(0);
+                    var id = $(row).find(".delete").data("eliminar");
+                    $.get("personal/delete/" + id, function(data, status) {
+                        swal("Eliminado con exito!!", {
+                            icon: "success",
+                        }).then((e) => {
+                            if (e) {
+                                location.reload();
+                            }
+
+                        });
+
+                    });
+                }
+            });
+    });
+});
+
+
 
 </script>
 

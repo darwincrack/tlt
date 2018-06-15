@@ -20,7 +20,7 @@ class PersonalModels
         if(!$id){
 
             $data = DB::table('personal')
-
+            ->where('personal.id_estado','!=', 4)
             ->join('cargos', 'personal.id_cargo', '=', 'cargos.id')
             ->join('departamentos', 'personal.id_departamento', '=', 'departamentos.id')
             ->join('ubicacion', 'personal.id_ubicacion', '=', 'ubicacion.id')
@@ -33,7 +33,7 @@ class PersonalModels
         {
             $data = DB::table('personal')
             ->where('personal.id', $id)
-
+            ->where('personal.id_estado','!=', 4)
             ->join('cargos', 'personal.id_cargo', '=', 'cargos.id')
             ->join('departamentos', 'personal.id_departamento', '=', 'departamentos.id')
             ->join('ubicacion', 'personal.id_ubicacion', '=', 'ubicacion.id')
@@ -51,7 +51,7 @@ class PersonalModels
 
 
         $lastInsertID= DB::table('personal')->insertGetId(
-            [ 'nro_empleado' => $nro_empleado, 'nombre' => $nombre, 'id_ubicacion' => $ubicacion, 'id_cargo' => $cargo, 'id_departamento' => $departamento, 'picture'=>$picture]
+            [ 'nro_empleado' => $nro_empleado, 'nombre' => $nombre, 'id_ubicacion' => $ubicacion, 'id_cargo' => $cargo, 'id_departamento' => $departamento, 'picture'=>$picture,'id_estado' => 1, 'created_at' => DB::raw("now()"), 'creado_por'=>Auth::user()->id]
         );
 
     }
@@ -61,29 +61,31 @@ class PersonalModels
     {
         DB::table('personal')
             ->where('id', $id_personal)
-            ->update( ['nro_empleado' => $nro_empleado, 'nombre' => $nombre, 'id_ubicacion' => $ubicacion, 'id_cargo' => $cargo, 'id_departamento' => $departamento, 'picture'=>$picture]);
+            ->update( ['nro_empleado' => $nro_empleado, 'nombre' => $nombre, 'id_ubicacion' => $ubicacion, 'id_cargo' => $cargo, 'id_departamento' => $departamento, 'picture'=>$picture,'updated_at' => DB::raw("now()"), 'actualizado_por'=>Auth::user()->id]);
     }
 
 
 
 
-    static public function show_personal($id_procedencia){
 
-        $data = DB::table('procedencia')
-            ->where('procedencia.id_procedencia', $id_procedencia)
-            ->join('ciudad', 'procedencia.id_ciudad', '=', 'ciudad.id_ciudad')
-            ->join('tipo_procedencia', 'procedencia.id_tipo_procedencia', '=', 'tipo_procedencia.id_tipo_procedencia')
-            ->select('procedencia.id_procedencia as id_procedencia', 'procedencia.nombre AS nombre_procedencia', 'tipo_procedencia.nombre AS nombre_tipo_procedencia' , 'tipo_procedencia.id_tipo_procedencia AS id_tipo_procedencia','ciudad.nombre AS nombre_ciudad' ,'ciudad.id_ciudad AS id_ciudad','procedencia.fecha_alquiler','procedencia.activo','motivo', 'alquilado')
-            ->first();
-        return $data;
-
-    }
 
     static public function last_userID()
     {
 
         $result=DB::table('Userinfo')->max('Userid');
         return $result+1;
+    }
+
+
+
+        static public function delete($id_personal)
+    {
+
+
+                  DB::table('personal')
+            ->where('id', $id_personal)
+            ->update( [ 'id_estado' => 4, 'updated_at' => DB::raw("now()"), 'actualizado_por'=>Auth::user()->id]);
+
     }
 
 
